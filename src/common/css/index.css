@@ -1,0 +1,71 @@
+html {
+  overflow-y: auto;
+}
+.box {
+  animation: linkin 2s forwards;
+}
+.home {
+  background: #303030;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+.home_large {
+  animation: moveleft .8s forwards;
+}
+.home_medium {
+  animation: moveright .8s forwards;
+}
+.home_small {
+  padding-top: 50px;
+  width: 100%;
+}
+.col_box {
+  padding: 10px !important;
+}
+.card_box {
+  background: transparent !important;
+}
+.card_title {
+  margin-bottom: 0 !important;
+}
+.indigo_text {
+  color: #3f51b5 !important;
+  font-weight: bold;
+}
+.black_text {
+  color: black !important;
+}
+.white_text {
+  color: white !important;
+}
+@keyframes linkin
+{
+	from {
+    opacity: 0;
+  }
+	to {
+    opacity: 1;
+  }
+}
+@keyframes moveleft
+{
+	from {
+    width: 100%;
+    padding-left: 340px
+  }
+	to {
+    width: calc(100% - 680px);
+    padding-left: 0
+  }
+}
+@keyframes moveright
+{
+	from {
+    width: calc(100% - 680px);
+    padding-left: 0
+  }
+	to {
+    width: 100%;
+    padding-left: 340px
+  }
+}
