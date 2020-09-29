@@ -127,7 +127,7 @@ export default {
       items: [
         { title: 'home', icon: 'mdi-home', link: '/' },
         { title: 'game store', icon: 'mdi-shopping', link: '/gamestore' },
-        { title: 'game space', icon: 'mdi-gamepad-square', link: '/' },
+        { title: 'game space', icon: 'mdi-gamepad-square', link: '/gamespace' },
         { title: 'chat room', icon: 'mdi-chat-processing', link: '/chatroom' }
       ],
       closeIcon: 'mdi-close-box-outline',

@@ -38,6 +38,59 @@ html {
 .white_text {
   color: white !important;
 }
+.reaction_box {
+  -moz-user-select: none; /*火狐*/
+  -webkit-user-select: none; /*webkit浏览器*/
+  -ms-user-select: none; /*IE10*/
+  -khtml-user-select: none; /*早期浏览器*/
+  user-select: none;
+  width: 100%;
+  height: calc(100vh - 64px - 44px);
+  background: #113D61;
+}
+.reaction_intro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+.reaction_title {
+  font-weight: 400;
+  margin-bottom: 20px;
+  font-size: 40px;
+  transition: font-size 0.2s ease-out;
+  -webkit-transition: font-size 0.2s ease-out;
+  -moz-user-select:none; /*火狐*/
+  -webkit-user-select:none; /*webkit浏览器*/
+  -ms-user-select:none; /*IE10*/
+  -khtml-user-select:none; /*早期浏览器*/
+  user-select:none;
+}
+.reaction_method {
+  font-size: 25px;
+  line-height: 45px;
+  transition: font-size 0.2s ease-out;
+  -webkit-transition: font-size 0.2s ease-out;
+}
+.reaction_chart {
+  width: 400px;
+  margin: 0 auto;
+  transition: width 0.2s ease-out;
+  -webkit-transition: width 0.2s ease-out;
+}
+@media only screen and (max-width: 1200px) { .reaction_title{ font-size: 39px; } .reaction_method{ font-size: 24px; line-height: 44px; }}
+@media only screen and (max-width: 1100px) { .reaction_title{ font-size: 38px; } .reaction_method{ font-size: 23px; line-height: 43px; }}
+@media only screen and (max-width: 1000px) { .reaction_title{ font-size: 37px; } .reaction_method{ font-size: 22px; line-height: 42px; }}
+@media only screen and (max-width: 900px) { .reaction_title{ font-size: 36px; } .reaction_method{ font-size: 21px; line-height: 41px; }}
+@media only screen and (max-width: 800px) { .reaction_title{ font-size: 35px; } .reaction_method{ font-size: 20px; line-height: 40px; }}
+@media only screen and (max-width: 700px) { .reaction_title{ font-size: 34px; } .reaction_method{ font-size: 19px; line-height: 39px; } .reaction_chart { width: 350px; }}
+@media only screen and (max-width: 600px) { .reaction_title{ font-size: 33px; } .reaction_method{ font-size: 18px; line-height: 38px; } .reaction_chart { width: 300px; }}
+@media only screen and (max-width: 500px) { .reaction_title{ font-size: 32px; } .reaction_method{ font-size: 17px; line-height: 37px; } .reaction_chart { width: 250px; }}
+@media only screen and (max-width: 400px) { .reaction_title{ font-size: 31px; } .reaction_method{ font-size: 16px; line-height: 36px; } .reaction_chart { width: 200px; }}
+@media only screen and (max-width: 300px) { .reaction_title{ font-size: 30px; } .reaction_method{ font-size: 15px; line-height: 35px; } .reaction_chart { width: 150px; }}
 @keyframes linkin
 {
 	from {
