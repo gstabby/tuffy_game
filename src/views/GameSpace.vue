@@ -20,11 +20,14 @@
                 <v-icon style="margin-right: 12px;">mdi-gamepad-square-outline</v-icon>
                 <v-toolbar-title style="margin-right: 12px;">{{ gameName }}</v-toolbar-title>
                 <v-icon style="margin-right: 12px;">mdi-counter</v-icon>
-                <v-toolbar-title>High Score: {{ gameScore }}</v-toolbar-title>
+                <v-toolbar-title>最高分: {{ gameScore }}</v-toolbar-title>
               </v-toolbar>
               <space v-if="gameId===null"></space>
               <reaction v-if="gameId===0"></reaction>
               <memory v-if="gameId===1"></memory>
+              <snake v-if="gameId===2"></snake>
+              <sudoku v-if="gameId===3"></sudoku>
+              <gobang v-if="gameId===4"></gobang>
             </v-card>
           </v-col>
         </v-row>
@@ -36,11 +39,17 @@
 <script>
 import reaction from '../components/reaction'
 import memory from '../components/memory'
+import snake from '../components/snake'
+import sudoku from '../components/sudoku'
+import gobang from '../components/gobang'
 import space from '../components/space'
 export default {
   components: {
     reaction,
     memory,
+    snake,
+    sudoku,
+    gobang,
     space
   },
   name: 'Home',
@@ -58,7 +67,7 @@ export default {
   data () {
     return {
       gameScore: '???',
-      gameId: null
+      gameId: this.$store.state.currentGame
     }
   },
   methods: {
@@ -78,9 +87,15 @@ export default {
     gameName () {
       switch (this.gameId) {
         case 0:
-          return '400ms？'
+          return '400ms?'
         case 1:
-          return '七个数字？'
+          return 'Seven?'
+        case 2:
+          return 'Retro Snaker'
+        case 3:
+          return 'Sudoku King!'
+        case 4:
+          return 'Let\'s Gobang'
         default:
           return '？？？'
       }

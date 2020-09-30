@@ -3,7 +3,7 @@
     <div class="reaction_box" :style="colorAction(actionCode)" @click="clickEvent">
       <div class="reaction_intro" v-show="actionCode==0">
         <img src="../assets/lightning.png" class="reaction_logo">
-        <h3 class="reaction_title">400ms ?</h3>
+        <h3 class="reaction_title">400ms?</h3>
           <p class="reaction_method">
             当屏幕颜色由红变绿时，尽可能快的点击屏幕<br>点击屏幕任意一处开始游戏
           </p>

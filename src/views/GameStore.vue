@@ -12,6 +12,7 @@
             <v-card
               height="200px"
               class="game_back game1_back"
+              @click="enterGame(0)"
             >
             </v-card>
           </v-col>
@@ -24,8 +25,8 @@
             <v-card
               height="200px"
               class="game_back game2_back align-center"
+              @click="enterGame(1)"
             >
-              <v-icon color="white">mdi-gamepad-square-outline</v-icon>
             </v-card>
           </v-col>
           <v-col
@@ -35,8 +36,9 @@
             class="col_box game_box"
           >
             <v-card
-              height="870px"
+              :height="game3Hei"
               class="game_back game3_back"
+              @click="enterGame(2)"
             >
             </v-card>
           </v-col>
@@ -49,6 +51,7 @@
             <v-card
               height="200px"
               class="game_back game4_back"
+              @click="enterGame(3)"
             >
             </v-card>
           </v-col>
@@ -61,6 +64,7 @@
             <v-card
               height="200px"
               class="game_back game5_back"
+              @click="enterGame(4)"
             >
             </v-card>
           </v-col>
@@ -102,9 +106,24 @@ export default {
           return 'home home_large'
         }
       }
+    },
+    enterGame (id) {
+      this.$store.commit('chooseGame', id)
+      this.$router.push({
+        path: '/gamespace'
+      })
     }
   },
   mounted () {
+  },
+  computed: {
+    game3Hei () {
+      if (this.width > 1264) {
+        return '870px'
+      } else {
+        return '400px'
+      }
+    }
   }
 }
 </script>
@@ -124,21 +143,24 @@ export default {
   background-position: 50%;
 }
 .game1_back {
-  background-image: url('../assets/game1.jpg');
+  background-image: url('../assets/lightning_back.svg');
+  background-size: auto;
 }
 .game2_back {
-  background-image: url('../assets/game2.jpg');
-  background-position-y: 10%;
+  background-image: url('../assets/number_back.svg');
+  background-color: black;
+  background-size: auto;
 }
 .game3_back {
-  background-image: url('../assets/game4.jpg');
+  background-image: url('../assets/snake_back.jpg');
+  background-position-y: 5%;
+  background-color: #93AB93;
 }
 .game4_back {
-  background-image: url('../assets/game3.jpg');
-  background-size: cover;
+  background-image: url('../assets/sudoku_back.jpg');
+  background-position-y: 0%;
 }
 .game5_back {
-  background-image: url('../assets/game5.jpg');
-  background-position-y: 10%;
+  background-image: url('../assets/gobang_back.jpg');
 }
 </style>

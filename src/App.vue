@@ -50,6 +50,16 @@
               >
                 {{ $store.state.unReadMsgArr.length }}
               </v-chip>
+              <v-chip
+                v-show="currentGame&&item.title==='Game Space'"
+                class="ma-2"
+                color="success"
+                text-color="white"
+                x-small
+                label
+              >
+                {{ currentGame }}
+              </v-chip>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -125,10 +135,10 @@ export default {
   data () {
     return {
       items: [
-        { title: 'home', icon: 'mdi-home', link: '/' },
-        { title: 'game store', icon: 'mdi-shopping', link: '/gamestore' },
-        { title: 'game space', icon: 'mdi-gamepad-square', link: '/gamespace' },
-        { title: 'chat room', icon: 'mdi-chat-processing', link: '/chatroom' }
+        { title: 'Home', icon: 'mdi-home', link: '/' },
+        { title: 'Game Store', icon: 'mdi-shopping', link: '/gamestore' },
+        { title: 'Game Space', icon: 'mdi-gamepad-square', link: '/gamespace' },
+        { title: 'Chat Room', icon: 'mdi-chat-processing', link: '/chatroom' }
       ],
       closeIcon: 'mdi-close-box-outline',
       drawerLeft: false,
@@ -137,27 +147,27 @@ export default {
         {
           color: 'red',
           rank: 1,
-          title: 'Reaction'
+          title: '400ms?'
         },
         {
           color: 'teal',
           rank: 214,
-          title: 'Fight'
+          title: 'Seven?'
         },
         {
           color: 'pink',
           rank: 23,
-          title: 'Racing'
+          title: 'Retro Snaker'
         },
         {
           color: 'red',
           rank: 12,
-          title: 'Flash'
+          title: 'Sudoku King!'
         },
         {
           color: 'teal',
           rank: 123,
-          title: 'LOL'
+          title: 'Let\'s Gobang'
         }
       ],
       users: [
@@ -175,6 +185,22 @@ export default {
     }
   },
   computed: {
+    currentGame () {
+      switch (this.$store.state.currentGame) {
+        case 0:
+          return 'Playing: 400ms?'
+        case 1:
+          return 'Playing: Seven?'
+        case 2:
+          return 'Playing: Retro Snaker'
+        case 3:
+          return 'Playing: Sudoku King!'
+        case 4:
+          return 'Playing: Let\'s Gobang'
+        default:
+          return 'Playing: ？？？'
+      }
+    }
   },
   methods: {
     exchangeMenuLeft () {

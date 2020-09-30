@@ -3,7 +3,7 @@
     <div class="reaction_box" @click="clickEvent">
       <div class="reaction_intro" v-show="actionCode==0">
         <img src="../assets/number.png" class="reaction_logo">
-        <h3 class="reaction_title">七个数字？</h3>
+        <h3 class="reaction_title">Seven?</h3>
           <p class="reaction_method">
             平均每个人一次能记住七个数字，你能记住更多吗？<br>
             点击屏幕任意一处开始游戏
@@ -175,7 +175,7 @@ export default {
   margin-top: 40px;
   width: 80%;
   height: 50px;
-  background: #8b82bd;
+  background: grey;
   border-radius: 30px;
   text-align: center;
   color: white;

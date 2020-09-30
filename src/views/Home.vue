@@ -3,7 +3,7 @@
     <div :class="homeClass()">
       <v-container>
         <v-row no-gutters>
-          <v-col
+          <!-- <v-col
             cols="12"
             sm="12"
             lg="12"
@@ -20,7 +20,7 @@
                 ></v-carousel-item>
               </v-carousel>
             </v-card>
-          </v-col>
+          </v-col> -->
           <v-col
             cols="12"
             sm="12"
@@ -33,11 +33,11 @@
               <v-img
                 class="white--text align-end"
                 height="300px"
-                src="../assets/game3.jpg"
+                src="../assets/home_lightning_back.png"
               >
-                <v-card-title>测测您的反应力？</v-card-title>
+                <v-card-title>听说普通人的反应速度是400ms</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0 indigo_text">反应力</v-card-subtitle>
+              <v-card-subtitle class="pb-0 indigo_text">400ms?</v-card-subtitle>
               <v-card-text class="black_text">
                 <div>当前排名第一的玩家：
                   <v-chip
@@ -55,14 +55,7 @@
                     <v-btn
                       color="indigo"
                       text
-                    >
-                      <v-icon>mdi-share-outline</v-icon>
-                      分享
-                    </v-btn>
-
-                    <v-btn
-                      color="indigo"
-                      text
+                      @click="enterGame(0)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -77,11 +70,11 @@
               <v-img
                 class="white--text align-end"
                 height="300px"
-                src="../assets/game4.jpg"
+                src="../assets/home_number_back.png"
               >
-                <v-card-title>蛇口夺食！</v-card-title>
+                <v-card-title>77777777</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0 indigo_text">Top ?</v-card-subtitle>
+              <v-card-subtitle class="pb-0 indigo_text">Seven?</v-card-subtitle>
               <v-card-text class="black_text">
                 <div>
                   当前排名第一的玩家：
@@ -100,14 +93,46 @@
                     <v-btn
                       color="indigo"
                       text
+                      @click="enterGame(1)"
                     >
-                      <v-icon>mdi-share-outline</v-icon>
-                      分享
+                      <v-icon>mdi-trophy-award</v-icon>
+                      挑战一下？
                     </v-btn>
-
+                  </div>
+                </div>
+              </v-card-text>
+            </v-card>
+            <v-card
+              class="card_box news_box"
+            >
+              <v-img
+                aspect-ratio="1"
+                class="white--text align-end"
+                height="300px"
+                src="../assets/home_snake_back.png"
+              >
+                <v-card-title>蛇柱挑战？！</v-card-title>
+              </v-img>
+              <v-card-subtitle class="pb-0 indigo_text">Retro Snaker</v-card-subtitle>
+              <v-card-text class="black_text">
+                <div>
+                  当前排名第一的玩家：
+                  <v-chip
+                    class="ma-2"
+                    color="indigo darken-3"
+                    outlined
+                    label
+                  >
+                    <v-icon left>mdi-trophy-outline</v-icon>
+                    Tuffy: 234
+                  </v-chip>
+                </div>
+                <div>
+                  <div class="btn_news">
                     <v-btn
                       color="indigo"
                       text
+                      @click="enterGame(2)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -122,11 +147,11 @@
               <v-img
                 class="white--text align-end"
                 height="300px"
-                src="../assets/game2.jpg"
+                src="../assets/sudoku_back.jpg"
               >
                 <v-card-title>数独之王 花落谁家</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0 indigo_text">Top ?</v-card-subtitle>
+              <v-card-subtitle class="pb-0 indigo_text">Sudoku King!</v-card-subtitle>
               <v-card-text class="black_text">
                 <div>
                   当前排名第一的玩家：
@@ -145,14 +170,7 @@
                     <v-btn
                       color="indigo"
                       text
-                    >
-                      <v-icon>mdi-share-outline</v-icon>
-                      分享
-                    </v-btn>
-
-                    <v-btn
-                      color="indigo"
-                      text
+                      @click="enterGame(3)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -167,11 +185,11 @@
               <v-img
                 class="white--text align-end"
                 height="300px"
-                src="../assets/backsword.png"
+                src="../assets/gobang_back.jpg"
               >
-                <v-card-title>你能瞬间记忆电话号码吗？</v-card-title>
+                <v-card-title>五子棋？不，是六子棋</v-card-title>
               </v-img>
-              <v-card-subtitle class="pb-0 indigo_text">Top ?</v-card-subtitle>
+              <v-card-subtitle class="pb-0 indigo_text">Let's Gobang</v-card-subtitle>
               <v-card-text class="black_text">
                 <div>
                   当前排名第一的玩家：
@@ -190,59 +208,7 @@
                     <v-btn
                       color="indigo"
                       text
-                    >
-                      <v-icon>mdi-share-outline</v-icon>
-                      分享
-                    </v-btn>
-
-                    <v-btn
-                      color="indigo"
-                      text
-                    >
-                      <v-icon>mdi-trophy-award</v-icon>
-                      挑战一下？
-                    </v-btn>
-                  </div>
-                </div>
-              </v-card-text>
-            </v-card>
-            <v-card
-              class="card_box news_box"
-            >
-              <v-img
-                class="white--text align-end"
-                height="300px"
-                src="../assets/backgirl.png"
-              >
-                <v-card-title>无情剑问无情</v-card-title>
-              </v-img>
-              <v-card-subtitle class="pb-0 indigo_text">Top ?</v-card-subtitle>
-              <v-card-text class="black_text">
-                <div>
-                  当前排名第一的玩家：
-                  <v-chip
-                    class="ma-2"
-                    color="indigo darken-3"
-                    outlined
-                    label
-                  >
-                    <v-icon left>mdi-trophy-outline</v-icon>
-                    Tuffy: 234
-                  </v-chip>
-                </div>
-                <div>
-                  <div class="btn_news">
-                    <v-btn
-                      color="indigo"
-                      text
-                    >
-                      <v-icon>mdi-share-outline</v-icon>
-                      分享
-                    </v-btn>
-
-                    <v-btn
-                      color="indigo"
-                      text
+                      @click="enterGame(4)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -272,7 +238,7 @@
                 <span class="title font-weight-light" style="color: white;">Game Tuffy</span>
               </v-card-title>
               <v-card-text class="headline font-weight-bold" style="color: white;">
-                “ 欢迎来到Tuffy的游戏小站，请尽情享受里面的游戏，并尝试和陌生人来一场比拼吧！”
+                “ 欢迎来到Tuffy的游戏小站，请尽情享受里面的游戏，并尝试和陌生朋友来一场比拼吧！”
               </v-card-text>
               <v-card-actions>
                 <v-list-item class="grow" align="right">
@@ -440,28 +406,28 @@ export default {
     return {
       imgs: [
         {
-          src: require('../assets/game1.jpg')
+          src: require('../assets/home_lightning_back.png')
         },
         {
-          src: require('../assets/backsword.png')
+          src: require('../assets/home_lightning_back.png')
         },
         {
-          src: require('../assets/game3.jpg')
+          src: require('../assets/home_snake_back.png')
         },
         {
-          src: require('../assets/game4.jpg')
+          src: require('../assets/sudoku_back.jpg')
         },
         {
-          src: require('../assets/backgirl.png')
+          src: require('../assets/gobang_back.jpg')
         }
       ],
       tab: null,
       ranks: [
-        { tab: 'Reaction', content: 'Tab 1 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Snake food', content: 'Tab 2 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: '数独King', content: 'Tab 3 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Memory phone number？', content: 'Tab 4 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'No one live', content: 'Tab 5 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] }
+        { tab: '400ms?', content: 'Tab 1 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
+        { tab: 'Seven?', content: 'Tab 2 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
+        { tab: 'Retro Snaker', content: 'Tab 3 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
+        { tab: 'Sudoku King!', content: 'Tab 4 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
+        { tab: 'Let\'s Gobang', content: 'Tab 5 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] }
       ],
       messages: [],
       rules: [
@@ -498,6 +464,12 @@ export default {
           this.messages = res.data.data.records
           this.maxPage = res.data.data.pages
         }
+      })
+    },
+    enterGame (id) {
+      this.$store.commit('chooseGame', id)
+      this.$router.push({
+        path: '/gamespace'
       })
     },
     saveMessage () {
