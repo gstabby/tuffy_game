@@ -20,7 +20,7 @@
                 <v-icon style="margin-right: 12px;">mdi-gamepad-square-outline</v-icon>
                 <v-toolbar-title style="margin-right: 12px;">{{ gameName }}</v-toolbar-title>
                 <v-icon style="margin-right: 12px;">mdi-counter</v-icon>
-                <v-toolbar-title>最高分: {{ gameScore }}</v-toolbar-title>
+                <v-toolbar-title>您的积分: {{ gameScore }}</v-toolbar-title>
               </v-toolbar>
               <space v-if="gameId===null"></space>
               <reaction v-if="gameId===0"></reaction>

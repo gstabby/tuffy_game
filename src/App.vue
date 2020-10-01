@@ -63,6 +63,16 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-text-box</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>
+              To Blog
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-navigation-drawer
@@ -281,5 +291,10 @@ export default {
   bottom: 45%;
   right: 20px;
   z-index: 7;
+}
+@media screen and (max-width: 700px) {
+  .user_menu_btn {
+    bottom: 15%;
+  }
 }
 </style>

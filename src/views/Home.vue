@@ -72,7 +72,7 @@
                 height="300px"
                 src="../assets/home_number_back.png"
               >
-                <v-card-title>77777777</v-card-title>
+                <v-card-title>7777777</v-card-title>
               </v-img>
               <v-card-subtitle class="pb-0 indigo_text">Seven?</v-card-subtitle>
               <v-card-text class="black_text">
