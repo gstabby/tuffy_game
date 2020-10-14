@@ -6,6 +6,30 @@
     <v-btn fab dark x-large color="primary" class="mx-2 menu_btn user_menu_btn" @click="exchangeMenuRight">
       <v-icon color="white">mdi-fire</v-icon>
     </v-btn>
+    <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+      <v-card>
+        <!-- <v-card-title class="headline grey lighten-2">
+          温馨提示
+        </v-card-title> -->
+        <v-card-text style="padding-top: 20px;">
+          确定要登出吗？
+        </v-card-text>
+        <!-- <v-divider></v-divider> -->
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="error"
+            text
+            @click="dialog = false"
+          >
+            确定
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-navigation-drawer
       fixed
       dark
@@ -120,7 +144,7 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-divider></v-divider>
-                <v-card-text v-text="lorem"></v-card-text>
+                <v-card-text v-text="message.text"></v-card-text>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -129,7 +153,7 @@
       <template v-slot:append>
         <div class="pa-4">
           <v-btn block color="primary" v-if="user.id===null">登录</v-btn>
-          <v-btn block color="error" v-else>登出</v-btn>
+          <v-btn block color="error" v-else @click="dialog=!dialog">登出</v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -139,6 +163,7 @@
 
 <script>
 // import store from './store/index'
+import socket from './common/js/socket'
 import api from './common/js/api'
 export default {
   name: 'App',
@@ -156,28 +181,27 @@ export default {
       messages: [
         {
           color: 'red',
-          rank: 1,
-          title: '400ms?'
+          rank: this.$store.state.scoreArr[0].sort,
+          title: '400ms?',
+          text: '您的最高得分是： ' + this.$store.state.scoreArr[0].score
         },
         {
           color: 'teal',
-          rank: 214,
-          title: 'Seven?'
-        },
-        {
-          color: 'pink',
-          rank: 23,
-          title: 'Retro Snaker'
+          rank: this.$store.state.scoreArr[1].sort,
+          title: 'Seven?',
+          text: '您的最高得分是： ' + this.$store.state.scoreArr[1].score
         },
         {
           color: 'red',
-          rank: 12,
-          title: 'Sudoku King!'
+          rank: this.$store.state.scoreArr[2].sort,
+          title: 'Sudoku King!',
+          text: '您的最高得分是： ' + this.$store.state.scoreArr[2].score
         },
         {
           color: 'teal',
-          rank: 123,
-          title: 'Let\'s Gobang'
+          rank: this.$store.state.scoreArr[3].sort,
+          title: 'Let\'s Gobang',
+          text: '您的最高得分是： ' + this.$store.state.scoreArr[3].score
         }
       ],
       users: [
@@ -191,18 +215,17 @@ export default {
       user: {
         id: localStorage.getItem('userId'),
         name: localStorage.getItem('user')
-      }
+      },
+      dialog: false
     }
   },
   computed: {
     currentGame () {
       switch (this.$store.state.currentGame) {
-        case 0:
-          return 'Playing: 400ms?'
         case 1:
-          return 'Playing: Seven?'
+          return 'Playing: 400ms?'
         case 2:
-          return 'Playing: Retro Snaker'
+          return 'Playing: Seven?'
         case 3:
           return 'Playing: Sudoku King!'
         case 4:
@@ -230,6 +253,21 @@ export default {
     toLink (link) {
       this.$router.push({
         path: link
+      })
+    },
+    getScoreById () {
+      this.axios.get(api.GETUSER, {
+        params: {
+          uId: this.user.id
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$store.commit('getScore', res.data.data)
+          for (const i in this.messages) {
+            this.messages[i].rank = this.$store.state.scoreArr[i].sort
+            this.messages[i].text = '您的最高得分是： ' + this.$store.state.scoreArr[i].score
+          }
+        }
       })
     }
   },
@@ -260,6 +298,13 @@ export default {
         }
       })
     }
+    if (this.user.id) {
+      this.getScoreById()
+    }
+    socket.initConnect()
+  },
+  beforeDestroy () {
+    socket.destroyConnect()
   },
   watch: {
     screenWidth () {

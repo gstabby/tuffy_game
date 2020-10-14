@@ -93,6 +93,7 @@ export default {
           this.isWin = true
           this.actionCode = 3
         } else {
+          this.saveScore()
           this.isWin = false
           this.actionCode = 3
         }
@@ -127,6 +128,9 @@ export default {
       // this.timeOver = 1
       this.actionCode = 1
       this.bornNum()
+    },
+    saveScore () {
+      this.$emit('saveScore', this.level)
     }
   },
   watch: {

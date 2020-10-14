@@ -12,7 +12,7 @@
             <v-card
               height="200px"
               class="game_back game1_back"
-              @click="enterGame(0)"
+              @click="enterGame(1)"
             >
             </v-card>
           </v-col>
@@ -25,7 +25,7 @@
             <v-card
               height="200px"
               class="game_back game2_back align-center"
-              @click="enterGame(1)"
+              @click="enterGame(2)"
             >
             </v-card>
           </v-col>
@@ -37,12 +37,12 @@
           >
             <v-card
               :height="game3Hei"
-              class="game_back game3_back"
-              @click="enterGame(2)"
+              class="game_back game4_back"
+              @click="enterGame(3)"
             >
             </v-card>
           </v-col>
-          <v-col
+          <!-- <v-col
             cols="12"
             sm="12"
             lg="5"
@@ -54,11 +54,11 @@
               @click="enterGame(3)"
             >
             </v-card>
-          </v-col>
+          </v-col> -->
           <v-col
             cols="12"
             sm="12"
-            lg="7"
+            lg="12"
             class="col_box game_box"
           >
             <v-card
@@ -158,7 +158,8 @@ export default {
 }
 .game4_back {
   background-image: url('../assets/sudoku_back.jpg');
-  background-position-y: 0%;
+  background-position-y: 50%;
+  background-size: cover;
 }
 .game5_back {
   background-image: url('../assets/gobang_back.jpg');

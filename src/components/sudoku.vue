@@ -15,7 +15,7 @@
         <h3 class="reaction_title">Sudoku King!</h3>
         <p class="reaction_method">
           你最快能多久解出一个数独呢<br>
-          “ 难度从入门级依次提高，完成一道入门级积分+10，往后根据难度依次累加10 ”<br>
+          “ 难度从入门级依次提高，完成一道入门级积分+10，难度提高一级，积分额外+10分 ”<br>
           点击屏幕任意一处开始游戏
         </p>
       </div>
@@ -25,7 +25,7 @@
         <h3 class="reaction_title">正在为您生成数独...</h3>
       </div>
       <div class="reaction_intro" v-show="actionCode==2">
-        <h3 class="reaction_method">当前难度：{{ difficulty }} ({{ difScore }})</h3>
+        <h3 class="reaction_method">当前难度：{{ difficulty }} </h3>
         <h3 class="reaction_method">请点击空白处进行数字选择</h3>
         <!-- <img src="../assets/ellipsis.png" class="reaction_logo"> -->
         <table class="sudoku_table" cellspacing="0">
@@ -297,6 +297,7 @@ export default {
         if (this.difficulty === '入门级') {
           this.tipFlag = true
           this.tip = '恭喜您，获得10点积分'
+          this.saveScore(10)
           this.difficulty = '普通级'
           const random = parseInt(Math.random() * (4 - 0 + 1) + 0, 10)
           this.currentSudoku = random
@@ -304,6 +305,7 @@ export default {
         } else if (this.difficulty === '普通级') {
           this.tipFlag = true
           this.tip = '恭喜您，获得20点积分'
+          this.saveScore(20)
           this.difficulty = '困难级'
           const random = parseInt(Math.random() * (4 - 0 + 1) + 0, 10)
           this.currentSudoku = random
@@ -316,6 +318,7 @@ export default {
         this.sudoKuArr = sudoku.easySudoku[this.currentSudoku]
         this.tipFlag = true
         this.tip = '恭喜您，获得30点积分'
+        this.saveScore(30)
         this.clean()
         this.actionCode = 4
       }
@@ -328,6 +331,15 @@ export default {
     cleanNum () {
       this.sudokuArr[this.currentRow][this.currentCol].num = ''
       this.dialog = false
+    },
+    saveScore (levelScore) {
+      let currentScore
+      if (this.$store.state.currentGameScore !== '???') {
+        currentScore = this.$store.state.currentGameScore
+      } else {
+        currentScore = 0
+      }
+      this.$emit('saveScore', currentScore + levelScore)
     }
   },
   watch: {
@@ -401,6 +413,7 @@ export default {
   font-weight: bold;
   text-align: center;
   outline: none;
+  cursor: pointer;
 }
 @media screen and (max-width: 800px) {
   .sudoku_table {

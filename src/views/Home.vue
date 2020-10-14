@@ -24,6 +24,38 @@
           <v-col
             cols="12"
             sm="12"
+            lg="12"
+            class="col_box"
+            style="margin-bottom: -20px;"
+          >
+            <v-card
+              class="card_box announce_box"
+            >
+              <v-card-title>
+                <v-icon
+                  large
+                  left
+                  color="white"
+                >
+                  mdi-ninja
+                </v-icon>
+                <span class="title font-weight-light" style="color: white;">Game Tuffy</span>
+              </v-card-title>
+              <v-card-text class="headline font-weight-bold" style="color: white;">
+                “ 欢迎来到Tuffy的游戏小站，请尽情享受里面的游戏，并尝试和陌生朋友来一场比拼吧！”
+              </v-card-text>
+              <v-card-actions>
+                <v-list-item class="grow" align="right">
+                  <v-list-item-content>
+                    <v-list-item-title style="color: white;">From Tuffy</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="12"
             lg="8"
             class="col_box"
           >
@@ -55,7 +87,7 @@
                     <v-btn
                       color="indigo"
                       text
-                      @click="enterGame(0)"
+                      @click="enterGame(1)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -93,7 +125,7 @@
                     <v-btn
                       color="indigo"
                       text
-                      @click="enterGame(1)"
+                      @click="enterGame(2)"
                     >
                       <v-icon>mdi-trophy-award</v-icon>
                       挑战一下？
@@ -102,7 +134,7 @@
                 </div>
               </v-card-text>
             </v-card>
-            <v-card
+            <!-- <v-card
               class="card_box news_box"
             >
               <v-img
@@ -140,7 +172,7 @@
                   </div>
                 </div>
               </v-card-text>
-            </v-card>
+            </v-card> -->
             <v-card
               class="card_box news_box"
             >
@@ -225,30 +257,6 @@
             class="col_box"
           >
             <v-card
-              class="card_box announce_box"
-            >
-              <v-card-title>
-                <v-icon
-                  large
-                  left
-                  color="white"
-                >
-                  mdi-ninja
-                </v-icon>
-                <span class="title font-weight-light" style="color: white;">Game Tuffy</span>
-              </v-card-title>
-              <v-card-text class="headline font-weight-bold" style="color: white;">
-                “ 欢迎来到Tuffy的游戏小站，请尽情享受里面的游戏，并尝试和陌生朋友来一场比拼吧！”
-              </v-card-text>
-              <v-card-actions>
-                <v-list-item class="grow" align="right">
-                  <v-list-item-content>
-                    <v-list-item-title style="color: white;">From Tuffy</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-card-actions>
-            </v-card>
-            <v-card
               class="card_box rank_box"
             >
               <div class="text-center justify-center py-4" style="background: #1E1E1E;">
@@ -262,13 +270,15 @@
                 background-color="#1E1E1E"
                 color="white"
                 center-active
+                active-class
+                centered
                 align-with-title
               >
                 <v-tab
                   v-for="rank in ranks"
-                  :key="rank.tab"
+                  :key="rank.gameId"
                 >
-                  {{ rank.tab }}
+                  {{ rank.GameName }}
                 </v-tab>
               </v-tabs>
               <v-tabs-items v-model="tab">
@@ -287,13 +297,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(range, i) in rank.ranges" :key="range.id">
+                          <tr v-for="(range, i) in rank.Score" :key="i">
                             <td v-if="i==0"><v-icon color="yellow">mdi-trophy</v-icon></td>
                             <td v-if="i==1"><v-icon color="#ddd">mdi-trophy</v-icon></td>
                             <td v-if="i==2"><v-icon color="brown">mdi-trophy</v-icon></td>
                             <td v-if="i>2">{{ i + 1 }}</td>
-                            <td>{{ range.name }}</td>
-                            <td>{{ range.score }}</td>
+                            <td>{{ range.username }}</td>
+                            <td>{{ range.s_score }}</td>
                           </tr>
                         </tbody>
                       </template>
@@ -422,13 +432,7 @@ export default {
         }
       ],
       tab: null,
-      ranks: [
-        { tab: '400ms?', content: 'Tab 1 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Seven?', content: 'Tab 2 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Retro Snaker', content: 'Tab 3 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Sudoku King!', content: 'Tab 4 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] },
-        { tab: 'Let\'s Gobang', content: 'Tab 5 Content', ranges: [{ id: 0, name: 'tuffy', score: '234' }, { id: 1, name: 'sihai', score: '24' }, { id: 2, name: 'hai', score: '1.2' }, { id: 3, name: 'Long', score: '3234' }, { id: 4, name: 'Long', score: '3234' }, { id: 5, name: 'Long', score: '3234' }, { id: 6, name: 'Long', score: '3234' }, { id: 7, name: 'Long', score: '3234' }, { id: 8, name: 'Long', score: '3234' }, { id: 9, name: 'Long', score: '3234' }] }
-      ],
+      ranks: [],
       messages: [],
       rules: [
         value => !!value || '请不要留言空白',
@@ -453,6 +457,14 @@ export default {
           return 'home home_large'
         }
       }
+    },
+    getScoreSort () {
+      this.axios.get(api.GETSCORESORT)
+        .then(res => {
+          if (res.data.code === 200) {
+            this.ranks = res.data.data
+          }
+        })
     },
     getMessageLeave () {
       this.axios.get(api.GETMESSAGE, {
@@ -526,6 +538,7 @@ export default {
         }
       })
     this.getMessageLeave()
+    this.getScoreSort()
   }
 }
 </script>

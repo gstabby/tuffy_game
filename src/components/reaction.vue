@@ -147,12 +147,18 @@ export default {
           break
         case 4:
           this.reactionTime_arr.length < 5 ? this.actionCode = 1 : this.actionCode = 5
+          if (this.reactionTime_arr.length === 5) {
+            this.save()
+          }
           break
         case 5:
           this.reactionTime_arr = []
           this.actionCode = 0
           break
       }
+    },
+    save () {
+      this.$emit('saveScore', this.average)
     }
   },
   watch: {

@@ -174,12 +174,6 @@ export default {
     icon () {
       return this.icons[this.iconIndex]
     }
-  },
-  mounted () {
-    socket.initConnect()
-  },
-  beforeDestroy () {
-    socket.destroyConnect()
   }
 }
 </script>

@@ -23,11 +23,11 @@
                 <v-toolbar-title>您的积分: {{ gameScore }}</v-toolbar-title>
               </v-toolbar>
               <space v-if="gameId===null"></space>
-              <reaction v-if="gameId===0"></reaction>
-              <memory v-if="gameId===1"></memory>
-              <snake v-if="gameId===2"></snake>
-              <sudoku v-if="gameId===3"></sudoku>
-              <gobang v-if="gameId===4"></gobang>
+              <reaction v-if="gameId===1" @saveScore="saveScore"></reaction>
+              <memory v-if="gameId===2" @saveScore="saveScore"></memory>
+              <!-- <snake v-if="gameId===2"></snake> -->
+              <sudoku v-if="gameId===3" @saveScore="saveScore"></sudoku>
+              <gobang v-if="gameId===4" :width='width' @saveScore="saveScore"></gobang>
             </v-card>
           </v-col>
         </v-row>
@@ -39,15 +39,14 @@
 <script>
 import reaction from '../components/reaction'
 import memory from '../components/memory'
-import snake from '../components/snake'
 import sudoku from '../components/sudoku'
 import gobang from '../components/gobang'
 import space from '../components/space'
+import api from '../common/js/api'
 export default {
   components: {
     reaction,
     memory,
-    snake,
     sudoku,
     gobang,
     space
@@ -66,7 +65,7 @@ export default {
   },
   data () {
     return {
-      gameScore: '???',
+      gameScore: this.$store.state.currentGameScore,
       gameId: this.$store.state.currentGame
     }
   },
@@ -81,17 +80,44 @@ export default {
           return 'home home_large'
         }
       }
+    },
+    getScoreByGame () {
+      console.log('getscore')
+      this.axios.get(api.GETSCOREBYGAME, {
+        params: {
+          gId: this.$store.state.currentGame,
+          uId: localStorage.getItem('userId')
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          if (res.data.data.best) {
+            this.$store.commit('getScoreByName', res.data.data.best)
+            this.gameScore = this.$store.state.currentGameScore
+          } else {
+            this.$store.commit('getScoreByName', '???')
+            this.gameScore = this.$store.state.currentGameScore
+          }
+        }
+      })
+    },
+    saveScore (score) {
+      this.axios.post(api.SAVESCORE, this.qs.stringify({
+        gId: this.$store.state.currentGame,
+        sScore: score
+      })).then(res => {
+        if (res) {
+          this.getScoreByGame()
+        }
+      })
     }
   },
   computed: {
     gameName () {
       switch (this.gameId) {
-        case 0:
-          return '400ms?'
         case 1:
-          return 'Seven?'
+          return '400ms?'
         case 2:
-          return 'Retro Snaker'
+          return 'Seven?'
         case 3:
           return 'Sudoku King!'
         case 4:
@@ -102,7 +128,13 @@ export default {
     }
   },
   mounted () {
+    this.gameScoreShow = false
+    this.getScoreByGame()
   },
+  // beforeUpdate () {
+  //   this.gameScoreShow = false
+  //   this.getScoreByGame()
+  // },
   beforeDestroy () {
   }
 }
