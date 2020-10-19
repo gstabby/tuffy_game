@@ -14,7 +14,7 @@ function connect () {
     Authorization: ''
   }
   stompClient.connect(headers, () => {
-    stompClient.subscribe(api.wstopic, (msg) => {
+    stompClient.subscribe(api.wstopic, msg => {
       if (msg.body) {
         const repObj = JSON.parse(msg.body)
         store.commit('getMsg', repObj)

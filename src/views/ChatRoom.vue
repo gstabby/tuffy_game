@@ -18,9 +18,9 @@
                 flat
               >
                 <v-icon style="margin-right: 12px;">mdi-message-outline</v-icon>
-                <v-toolbar-title>Tuffy的聊天室</v-toolbar-title>
+                <v-toolbar-title>Tuffy的聊天室<span v-if="!isLogined">——聊天室功能请登录后使用</span></v-toolbar-title>
               </v-toolbar>
-              <div class="chat_container">
+              <div class="chat_container" v-if="isLogined">
                 <v-card
                   flat
                   v-for="(chat, n) in chats"
@@ -37,7 +37,7 @@
                   </v-alert>
                   <v-card-text v-if="chat.uid!=selfId&&chat.join!=true">
                     <v-row class="mb-4" align="center">
-                      <v-avatar tile><img :src="'http://192.168.31.250/avatar/' + chat.avatar" /></v-avatar>
+                      <v-avatar tile><img :src="apiip + '/avatar/' + chat.avatar" /></v-avatar>
                       <strong class="title" style="margin-left: 10px;">{{ chat.username }}</strong>
                       <v-spacer></v-spacer>
                     </v-row>
@@ -49,7 +49,7 @@
                     <v-row class="mb-4" align="center">
                       <v-spacer></v-spacer>
                       <strong class="title" style="margin-right: 10px;">{{ chat.username }}</strong>
-                      <v-avatar tile><img :src="'http://192.168.31.250/avatar/' + chat.avatar" /></v-avatar>
+                      <v-avatar tile><img :src="apiip + '/avatar/' + chat.avatar" /></v-avatar>
                     </v-row>
                     <p>
                       <v-icon>{{ chat.spirit }}</v-icon>{{ chat.content }}
@@ -57,7 +57,7 @@
                   </v-card-text>
                 </v-card>
               </div>
-              <div class="send_box">
+              <div class="send_box" v-if="isLogined">
                 <v-text-field
                   v-model="message"
                   append-outer-icon='mdi-send'
@@ -83,6 +83,7 @@
 
 <script>
 import socket from '../common/js/socket'
+import api from '../common/js/api'
 export default {
   name: 'Home',
   props: {
@@ -113,7 +114,9 @@ export default {
       ],
       message: 'Hey!',
       recept: '',
-      selfId: localStorage.getItem('userId')
+      selfId: localStorage.getItem('userId'),
+      apiip: api.ip,
+      isLogined: false
     }
   },
   methods: {
@@ -154,7 +157,6 @@ export default {
           }
         )
       }
-      console.log('临时聊天内容' + socket.tempRecive)
       this.resetIcon()
       this.clearMessage()
     },
@@ -173,6 +175,21 @@ export default {
   computed: {
     icon () {
       return this.icons[this.iconIndex]
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('token')) {
+      this.axios.get(api.ISEXPIRED, {
+        params: {
+          token: localStorage.getItem('token')
+        }
+      }).then(res => {
+        if (res.data.data === true) {
+          localStorage.clear()
+        } else {
+          this.isLogined = true
+        }
+      })
     }
   }
 }

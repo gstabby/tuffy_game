@@ -1,4 +1,6 @@
-const ip = 'http://192.168.31.250'
+// const ip = 'http://192.168.31.250:80' // 开发环境
+
+const ip = 'http://175.24.112.117:80' // 运行环境
 
 const ws = ip + '/ws/endpointChat' // websocket连接
 
@@ -23,6 +25,7 @@ const GETSCORESORT = ip + '/score/getAllSort' // 获取排名
 const SAVESCORE = ip + '/score/save' // 保存分数
 
 export default {
+  ip: ip,
   ws: ws,
   wstopic: wstopic,
   wssend: wssend,

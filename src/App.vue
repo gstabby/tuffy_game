@@ -23,7 +23,7 @@
           <v-btn
             color="error"
             text
-            @click="dialog = false"
+            @click="destroyLogin"
           >
             确定
           </v-btn>
@@ -87,7 +87,7 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link @click="toBlog">
           <v-list-item-icon>
             <v-icon>mdi-text-box</v-icon>
           </v-list-item-icon>
@@ -110,6 +110,7 @@
       <v-container>
         <v-row justify="center">
           <v-subheader v-if="user.id===null">Welcome to Tuffy's game !</v-subheader>
+          <v-subheader v-if="user.id===null">登录后才可以看到您的纪录以及参与排名</v-subheader>
           <v-subheader v-if="user.id!==null">Welcome {{ user.name }}</v-subheader>
           <v-expansion-panels popout v-if="user.id!==null">
             <v-expansion-panel
@@ -152,7 +153,7 @@
       </v-container>
       <template v-slot:append>
         <div class="pa-4">
-          <v-btn block color="primary" v-if="user.id===null">登录</v-btn>
+          <v-btn block color="primary" v-if="user.id===null" @click="login">登录</v-btn>
           <v-btn block color="error" v-else @click="dialog=!dialog">登出</v-btn>
         </div>
       </template>
@@ -183,33 +184,28 @@ export default {
           color: 'red',
           rank: this.$store.state.scoreArr[0].sort,
           title: '400ms?',
-          text: '您的最高得分是： ' + this.$store.state.scoreArr[0].score
+          text: '您的最高纪录是： ' + this.$store.state.scoreArr[0].score
         },
         {
           color: 'teal',
           rank: this.$store.state.scoreArr[1].sort,
           title: 'Seven?',
-          text: '您的最高得分是： ' + this.$store.state.scoreArr[1].score
+          text: '您的最高纪录是： ' + this.$store.state.scoreArr[1].score
         },
         {
           color: 'red',
           rank: this.$store.state.scoreArr[2].sort,
           title: 'Sudoku King!',
-          text: '您的最高得分是： ' + this.$store.state.scoreArr[2].score
+          text: '您的最高纪录是： ' + this.$store.state.scoreArr[2].score
         },
         {
           color: 'teal',
           rank: this.$store.state.scoreArr[3].sort,
           title: 'Let\'s Gobang',
-          text: '您的最高得分是： ' + this.$store.state.scoreArr[3].score
+          text: '您的最高纪录是： ' + this.$store.state.scoreArr[3].score
         }
       ],
-      users: [
-        { text: 'Tuffy' },
-        { text: '2020-09-08' }
-      ],
       level: 123,
-      lorem: '您在XX游戏的排名在前X名哦',
       screenWidth: 0,
       screenHeight: '',
       user: {
@@ -265,10 +261,21 @@ export default {
           this.$store.commit('getScore', res.data.data)
           for (const i in this.messages) {
             this.messages[i].rank = this.$store.state.scoreArr[i].sort
-            this.messages[i].text = '您的最高得分是： ' + this.$store.state.scoreArr[i].score
+            this.messages[i].text = '您的最高得分是： ' + Math.abs(this.$store.state.scoreArr[i].score)
           }
         }
       })
+    },
+    destroyLogin () {
+      this.dialog = !this.dialog
+      localStorage.clear()
+      location.reload()
+    },
+    login () {
+      window.location.href = 'http://tuffy.viphk.ngrok.org/login?from=game'
+    },
+    toBlog () {
+      window.location.href = 'http://tuffy.viphk.ngrok.org/blog'
     }
   },
   mounted () {

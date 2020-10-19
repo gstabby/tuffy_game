@@ -2,6 +2,15 @@
   <div class="box">
     <div :class="homeClass()">
       <v-container>
+        <v-snackbar
+          v-model="tipFlag"
+          timeout="3000"
+          color="success"
+          absolute
+          rounded
+        >
+          {{ tip }}
+        </v-snackbar>
         <v-row no-gutters>
           <v-col
             cols="12"
@@ -20,7 +29,7 @@
                 <v-icon style="margin-right: 12px;">mdi-gamepad-square-outline</v-icon>
                 <v-toolbar-title style="margin-right: 12px;">{{ gameName }}</v-toolbar-title>
                 <v-icon style="margin-right: 12px;">mdi-counter</v-icon>
-                <v-toolbar-title>您的积分: {{ gameScore }}</v-toolbar-title>
+                <v-toolbar-title>您的纪录: {{ gameScore }}</v-toolbar-title>
               </v-toolbar>
               <space v-if="gameId===null"></space>
               <reaction v-if="gameId===1" @saveScore="saveScore"></reaction>
@@ -66,7 +75,9 @@ export default {
   data () {
     return {
       gameScore: this.$store.state.currentGameScore,
-      gameId: this.$store.state.currentGame
+      gameId: this.$store.state.currentGame,
+      tipFlag: false,
+      tip: ''
     }
   },
   methods: {
@@ -92,7 +103,7 @@ export default {
         if (res.data.code === 200) {
           if (res.data.data.best) {
             this.$store.commit('getScoreByName', res.data.data.best)
-            this.gameScore = this.$store.state.currentGameScore
+            this.gameScore = Math.abs(this.$store.state.currentGameScore)
           } else {
             this.$store.commit('getScoreByName', '???')
             this.gameScore = this.$store.state.currentGameScore
@@ -101,14 +112,19 @@ export default {
       })
     },
     saveScore (score) {
-      this.axios.post(api.SAVESCORE, this.qs.stringify({
-        gId: this.$store.state.currentGame,
-        sScore: score
-      })).then(res => {
-        if (res) {
-          this.getScoreByGame()
-        }
-      })
+      if (localStorage.getItem('userId')) {
+        this.axios.post(api.SAVESCORE, this.qs.stringify({
+          gId: this.$store.state.currentGame,
+          sScore: score
+        })).then(res => {
+          if (res) {
+            this.getScoreByGame()
+          }
+        })
+      } else {
+        this.tipFlag = true
+        this.tip = '登录后才可以将您的成绩参与全站排名哦'
+      }
     }
   },
   computed: {

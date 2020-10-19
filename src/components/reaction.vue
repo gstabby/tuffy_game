@@ -158,7 +158,7 @@ export default {
       }
     },
     save () {
-      this.$emit('saveScore', this.average)
+      this.$emit('saveScore', (0 - this.average))
     }
   },
   watch: {

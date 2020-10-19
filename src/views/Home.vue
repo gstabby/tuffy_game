@@ -71,7 +71,8 @@
               </v-img>
               <v-card-subtitle class="pb-0 indigo_text">400ms?</v-card-subtitle>
               <v-card-text class="black_text">
-                <div>当前排名第一的玩家：
+                <div v-if="ranks[0].Score">
+                  当前排名第一的玩家：
                   <v-chip
                     class="ma-2"
                     color="indigo darken-3"
@@ -79,7 +80,7 @@
                     label
                   >
                     <v-icon left>mdi-trophy-outline</v-icon>
-                    Tuffy: 234
+                    {{ ranks[0].Score[0].username }}: {{ Math.abs(ranks[0].Score[0].s_score) }}
                   </v-chip>
                 </div>
                 <div>
@@ -108,7 +109,7 @@
               </v-img>
               <v-card-subtitle class="pb-0 indigo_text">Seven?</v-card-subtitle>
               <v-card-text class="black_text">
-                <div>
+                <div v-if="ranks[1].Score">
                   当前排名第一的玩家：
                   <v-chip
                     class="ma-2"
@@ -117,7 +118,7 @@
                     label
                   >
                     <v-icon left>mdi-trophy-outline</v-icon>
-                    Tuffy: 234
+                    {{ ranks[1].Score[0].username }}: {{ ranks[1].Score[0].s_score }}
                   </v-chip>
                 </div>
                 <div>
@@ -185,7 +186,7 @@
               </v-img>
               <v-card-subtitle class="pb-0 indigo_text">Sudoku King!</v-card-subtitle>
               <v-card-text class="black_text">
-                <div>
+                <div v-if="ranks[2].Score">
                   当前排名第一的玩家：
                   <v-chip
                     class="ma-2"
@@ -194,7 +195,7 @@
                     label
                   >
                     <v-icon left>mdi-trophy-outline</v-icon>
-                    Tuffy: 234
+                    {{ ranks[2].Score[0].username }}: {{ ranks[2].Score[0].s_score }}
                   </v-chip>
                 </div>
                 <div>
@@ -223,7 +224,7 @@
               </v-img>
               <v-card-subtitle class="pb-0 indigo_text">Let's Gobang</v-card-subtitle>
               <v-card-text class="black_text">
-                <div>
+                <div v-if="ranks[3].Score">
                   当前排名第一的玩家：
                   <v-chip
                     class="ma-2"
@@ -232,7 +233,7 @@
                     label
                   >
                     <v-icon left>mdi-trophy-outline</v-icon>
-                    Tuffy: 234
+                    {{ ranks[3].Score[0].username }}: {{ ranks[3].Score[0].s_score }}
                   </v-chip>
                 </div>
                 <div>
@@ -269,9 +270,6 @@
                 v-model="tab"
                 background-color="#1E1E1E"
                 color="white"
-                center-active
-                active-class
-                centered
                 align-with-title
               >
                 <v-tab
@@ -293,7 +291,7 @@
                           <tr>
                             <th class="text-center">排名</th>
                             <th class="text-center">昵称</th>
-                            <th class="text-center">分数</th>
+                            <th class="text-center">纪录</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -303,7 +301,7 @@
                             <td v-if="i==2"><v-icon color="brown">mdi-trophy</v-icon></td>
                             <td v-if="i>2">{{ i + 1 }}</td>
                             <td>{{ range.username }}</td>
-                            <td>{{ range.s_score }}</td>
+                            <td>{{ Math.abs(range.s_score) }}</td>
                           </tr>
                         </tbody>
                       </template>
@@ -330,7 +328,7 @@
                     :key="message.title"
                   >
                     <v-list-item-avatar tile>
-                      <v-img :src="'http://192.168.31.250/avatar/' + message.avatar"></v-img>
+                      <v-img :src="ip + '/avatar/' + message.avatar"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-title>{{ message.username }}</v-list-item-title>
@@ -432,7 +430,12 @@ export default {
         }
       ],
       tab: null,
-      ranks: [],
+      ranks: [
+        { Score: [{ username: 'a', s_score: 1 }] },
+        { Score: [{ username: 'a', s_score: 1 }] },
+        { Score: [{ username: 'a', s_score: 1 }] },
+        { Score: [{ username: 'a', s_score: 1 }] }
+      ],
       messages: [],
       rules: [
         value => !!value || '请不要留言空白',
@@ -443,7 +446,8 @@ export default {
       maxPage: 1,
       tipFlag: false,
       tip: '',
-      valid: false
+      valid: false,
+      ip: api.ip
     }
   },
   methods: {
@@ -485,26 +489,31 @@ export default {
       })
     },
     saveMessage () {
-      this.axios.post(api.SAVEMESSAGE, this.qs.stringify({
-        content: this.msgLeave
-      })).then(res => {
-        if (res.data.code === 200) {
-          this.msgLeave = ''
-          this.tip = '留言成功'
-          this.tipFlag = true
-          this.currentPage = 1
-          this.$refs.form.reset()
-          this.getMessageLeave()
-        } else {
-          this.tip = res.data.msg
-          this.tipFlag = true
-        }
-      }).catch(error => {
-        if (error) {
-          this.tip = '服务器错误，请稍后再试'
-          this.tipFlag = true
-        }
-      })
+      if (localStorage.getItem('token')) {
+        this.axios.post(api.SAVEMESSAGE, this.qs.stringify({
+          content: this.msgLeave
+        })).then(res => {
+          if (res.data.code === 200) {
+            this.msgLeave = ''
+            this.tip = '留言成功'
+            this.tipFlag = true
+            this.currentPage = 1
+            this.$refs.form.reset()
+            this.getMessageLeave()
+          } else {
+            this.tip = res.data.msg
+            this.tipFlag = true
+          }
+        }).catch(error => {
+          if (error) {
+            this.tip = '服务器错误，请稍后再试'
+            this.tipFlag = true
+          }
+        })
+      } else {
+        this.tip = '请登录后留言'
+        this.tipFlag = true
+      }
     }
   },
   computed: {
@@ -515,28 +524,28 @@ export default {
     }
   },
   mounted () {
-    const formData = new FormData()
-    const formLogin = {
-      username: 'gs',
-      password: '111111'
-    }
-    for (const key in formLogin) {
-      formData.append(key, formLogin[key])
-    }
-    this.axios.post(api.LOGIN, formData)
-      .then(res => {
-        const token = res.headers.authorization
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', res.data.data.username)
-        localStorage.setItem('userId', res.data.data.id)
-        localStorage.setItem('created', res.data.data.created)
-        localStorage.setItem('email', res.data.data.email)
-        localStorage.setItem('avatar', res.data.data.avatar)
-      })
-      .catch(error => {
-        if (error) {
-        }
-      })
+    // const formData = new FormData()
+    // const formLogin = {
+    //   username: 'gs',
+    //   password: '111111'
+    // }
+    // for (const key in formLogin) {
+    //   formData.append(key, formLogin[key])
+    // }
+    // this.axios.post(api.LOGIN, formData)
+    //   .then(res => {
+    //     const token = res.headers.authorization
+    //     localStorage.setItem('token', token)
+    //     localStorage.setItem('user', res.data.data.username)
+    //     localStorage.setItem('userId', res.data.data.id)
+    //     localStorage.setItem('created', res.data.data.created)
+    //     localStorage.setItem('email', res.data.data.email)
+    //     localStorage.setItem('avatar', res.data.data.avatar)
+    //   })
+    //   .catch(error => {
+    //     if (error) {
+    //     }
+    //   })
     this.getMessageLeave()
     this.getScoreSort()
   }
